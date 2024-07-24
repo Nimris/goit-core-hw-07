@@ -1,6 +1,5 @@
 from main2 import AddressBook, Record
-from main3 import get_upcoming_birthdays
-from time import strftime
+from main3 import get_birthdays
 
 def input_error(func):
     def inner(*args, **kwargs):
@@ -62,17 +61,16 @@ def add_birthday(args, book):
      
 @input_error
 def show_birthday(args, book):
-    name = args[0]
-    return book.birthday
-    record = book.find(name)
+    record = book.find(args[0])
     if record and record.birthday:
-        return record.birthday.strftime('%d.%m.%Y')
+        return record.birthday.value.strftime('%d.%m.%Y')
     return "Birthday not found."
     
 @input_error
 def birthdays(args, book):
-    return get_upcoming_birthdays(book)
-
+    records = [{"name": record.name.value, "birthday": record.birthday.value.strftime('%d.%m.%Y')} for record in book.values() if record.birthday]
+    return get_birthdays(records)
+ 
     
 def main():
     book = AddressBook()

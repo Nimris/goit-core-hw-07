@@ -2,11 +2,11 @@ from datetime import datetime, date, timedelta
 
 
 def string_to_date(date_string):
-    return datetime.strptime(date_string, "%Y.%m.%d").date()
+    return datetime.strptime(date_string, "%d.%m.%Y").date()
 
 
 def date_to_string(date):
-    return date.strftime("%Y.%m.%d")
+    return date.strftime("%d.%m.%Y")
 
 
 def prepare_user_list(user_data):
@@ -29,11 +29,14 @@ def adjust_for_weekend(birthday):
     return birthday
 
 
-def get_upcoming_birthdays(users, days=7):
+def get_birthdays(users, days=7):
     upcoming_birthdays = []
     today = date.today()
     for user in users:
-        birthday_this_year = user["birthday"].replace(year=today.year)
+        birthday_date = user["birthday"]
+        birthday_date = string_to_date(birthday_date)
+        birthday_this_year = birthday_date.replace(year=today.year)
+        
         if birthday_this_year < today:
            birthday_this_year = birthday_this_year + timedelta(days = 366)
         if 0 <= (birthday_this_year - today).days <= days:
