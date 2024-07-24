@@ -1,5 +1,4 @@
 from main2 import AddressBook, Record
-from main3 import get_birthdays
 
 def input_error(func):
     def inner(*args, **kwargs):
@@ -69,7 +68,7 @@ def show_birthday(args, book):
 @input_error
 def birthdays(args, book):
     records = [{"name": record.name.value, "birthday": record.birthday.value.strftime('%d.%m.%Y')} for record in book.values() if record.birthday]
-    return get_birthdays(records)
+    return AddressBook.get_upcoming_birthdays(records)
  
     
 def main():

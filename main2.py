@@ -66,7 +66,7 @@ class AddressBook(UserDict):
         del self.data[name]
         
     def get_upcoming_birthdays(self):
-        return get_birthdays()
+        return get_birthdays(self)
         
     def __str__(self):
         return '\n'.join(str(record) for record in self.data.values())
